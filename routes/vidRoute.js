@@ -2,7 +2,6 @@ const express = require('express');
 
 const router = express.Router();
 
-router.route('/').post(() => {});
-router.route('/:id').get(() => {});
+router.route('/:filename').get(() => {});
 
 module.exports = router;

@@ -10,16 +10,16 @@ exports.getAllExercises = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(404).json({
+    return res.status(404).json({
       status: 'fail',
     });
-    return console.log(err);
   }
 };
 
 exports.getExercise = async (req, res) => {
   try {
     const exercise = await Exercise.findById(req.params.id);
+    if (!exercise) throw Error('No exercise at this id boi');
     res.status(200).json({
       status: 'succes',
       data: {
@@ -27,10 +27,9 @@ exports.getExercise = async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(404).json({
+    return res.status(404).json({
       status: 'fail',
     });
-    return console.log(err);
   }
 };
 
@@ -38,16 +37,15 @@ exports.createExercise = async (req, res) => {
   const newExercise = new Exercise(req.body);
   try {
     await newExercise.save();
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        newExercise,
+      },
+    });
   } catch (err) {
-    res.status(404).json({
+    return res.status(404).json({
       status: 'fail',
     });
   }
-
-  return res.status(200).json({
-    status: 'success',
-    data: {
-      newExercise,
-    },
-  });
 };

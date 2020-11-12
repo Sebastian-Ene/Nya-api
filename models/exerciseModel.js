@@ -7,6 +7,7 @@ const exerciseSchema = new mongoose.Schema({
     unique: true,
   },
   reps: { type: Number, required: true },
+  vid: { type: String, required: true },
 });
 
 const Exercise = mongoose.model('Exercise', exerciseSchema);
