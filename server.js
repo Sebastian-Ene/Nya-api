@@ -4,8 +4,12 @@ const mongoose = require('mongoose');
 dotenv.config({ path: './config.env' });
 const app = require('./app');
 
+const dbURI = process.env.DATABASE.replace('USER', process.env.USER).replace(
+  'PASSWORD',
+  process.env.PASSWORD
+);
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect(dbURI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
