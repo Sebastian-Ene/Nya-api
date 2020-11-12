@@ -8,7 +8,7 @@ const dbURI = process.env.DATABASE.replace('USER', process.env.USER).replace(
 );
 
 //error handling for wrong filename needed here
-exports.getImg = async (req, res) => {
+exports.getMedia = async (req, res) => {
   try {
     const conn = mongoose.createConnection(dbURI);
     conn.once('open', async () => {
