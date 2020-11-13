@@ -13,6 +13,7 @@ const trainingSchema = new mongoose.Schema({
   duration: { type: Number, required: true },
   color: { type: String, required: true },
   exercises: { type: Array, required: true },
+  img: { type: String, required: true },
 });
 
 const Training = mongoose.model('Training', trainingSchema);
