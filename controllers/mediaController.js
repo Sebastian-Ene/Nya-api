@@ -8,24 +8,20 @@ const dbURI = process.env.DATABASE.replace('USER', process.env.USER).replace(
 );
 
 //error handling for wrong filename needed here
-exports.getMedia = async (req, res) => {
+exports.getMedia = (req, res) => {
   try {
     const conn = mongoose.createConnection(dbURI);
     conn.once('open', async () => {
-      const gfs = Grid(conn.db, mongoose.mongo);
-
-      await gfs.files.findOne(
-        { filename: req.params.filename },
-        (err, file) => {
-          const readstream = gfs.createReadStream(file.filename);
-          readstream.on('error', () => {
-            throw err;
-          });
-          readstream.pipe(res);
-        }
-      );
+      try {
+        const gfs = Grid(conn.db, mongoose.mongo);
+        const file = await gfs.files.findOne({ filename: req.params.filename });
+        const readstream = gfs.createReadStream(file.filename);
+        readstream.pipe(res);
+      } catch (err) {
+        res.status(404).json({ status: 'YESSSS' });
+      }
     });
   } catch (err) {
-    return res.status(404);
+    res.status(404).json({ status: 'YESSSS' });
   }
 };
