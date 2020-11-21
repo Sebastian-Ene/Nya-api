@@ -2,7 +2,34 @@ const Training = require('../models/trainingModel');
 
 exports.getAllTrainings = async (req, res) => {
   try {
-    const trainings = await Training.find();
+    //build query
+
+    //filter
+    const queryObj = { ...req.query };
+    const excludeFields = ['sort', 'page', 'limit'];
+    excludeFields.forEach((el) => delete queryObj[el]);
+    let query = Training.find(queryObj);
+    //sorting
+    query = query.sort(req.query.sort);
+
+    //pagination
+    const page = req.query.page * 1 - 1;
+    const limit = req.query.limit * 1;
+    query = query.skip(page * limit).limit(limit);
+
+    //if an empty page is requested return 404 page not found
+    if (req.query.page) {
+      const numTraining = await Training.countDocuments();
+      if (numTraining <= page * limit) throw new Error('Page not found!');
+    }
+
+    //exclude __v
+    query = query.select('-__v');
+
+    //execute query
+    const trainings = await query;
+
+    // sending res
     res.status(200).json({
       status: 'succes',
       data: {

@@ -23,6 +23,7 @@ const trainingSchema = new mongoose.Schema({
     required: true,
   },
   img: { type: String, required: true },
+  mainFocus: { type: String, required: true },
 });
 
 const Training = mongoose.model('Training', trainingSchema);
