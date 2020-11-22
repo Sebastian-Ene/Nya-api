@@ -7,7 +7,6 @@ const dbURI = process.env.DATABASE.replace('USER', process.env.USER).replace(
   process.env.PASSWORD
 );
 
-//error handling for wrong filename needed here
 exports.getMedia = (req, res) => {
   try {
     const conn = mongoose.createConnection(dbURI);
@@ -18,10 +17,10 @@ exports.getMedia = (req, res) => {
         const readstream = gfs.createReadStream(file.filename);
         readstream.pipe(res);
       } catch (err) {
-        res.status(404).json({ status: 'YESSSS' });
+        res.status(404).json({ status: 'Error reading specified file' });
       }
     });
   } catch (err) {
-    res.status(404).json({ status: 'YESSSS' });
+    res.status(404).json({ status: 'Error connecting to DB' });
   }
 };
