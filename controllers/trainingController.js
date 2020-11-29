@@ -1,4 +1,20 @@
+const S3 = require('aws-sdk/clients/s3');
 const Training = require('../models/trainingModel');
+// Set a new instance of the service
+const s3 = new S3({
+  apiVersion: '2006-03-01',
+  region: 'eu-central-1',
+});
+
+async function mediaUrl(key) {
+  try {
+    const params = { Bucket: 'nya', Key: key, Expires: 60 };
+    const url = await s3.getSignedUrlPromise('getObject', params);
+    return url;
+  } catch (err) {
+    return 'Gone bad';
+  }
+}
 
 exports.getAllTrainings = async (req, res) => {
   try {
@@ -27,7 +43,13 @@ exports.getAllTrainings = async (req, res) => {
     query = query.select('-__v');
 
     //execute query
-    const trainings = await query;
+    const dbtrainings = await query;
+    const trainings = await Promise.all(
+      dbtrainings.map(async (el) => {
+        el.img = await mediaUrl(`img/${el.img}`);
+        return el;
+      })
+    );
 
     // sending res
     res.status(200).json({
@@ -37,6 +59,7 @@ exports.getAllTrainings = async (req, res) => {
       },
     });
   } catch (err) {
+    console.log(err);
     res.status(404).json({
       status: 'fail',
     });
