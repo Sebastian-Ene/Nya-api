@@ -1,3 +1,5 @@
+// ------ OBOSOLETE-------
+
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');

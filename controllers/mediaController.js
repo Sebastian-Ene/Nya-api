@@ -1,3 +1,5 @@
+//---- OBSOLETE -----
+
 const mongoose = require('mongoose');
 const Grid = require('gridfs-stream');
 

@@ -17,12 +17,14 @@ const trainingSchema = new mongoose.Schema({
       {
         name: { type: String, required: true },
         reps: { type: Number, required: true },
-        vid: { type: String, required: true },
+        vidName: { type: String, required: true },
+        vidLink: { type: String, default: '' },
       },
     ],
     required: true,
   },
-  img: { type: String, required: true },
+  imgName: { type: String, required: true },
+  imgLink: { type: String, default: '' },
   mainFocus: { type: String, required: true },
 });
 
