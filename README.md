@@ -1,7 +1,7 @@
 # Nya-api
 
-Nya is a fitness app designed to help people stay healthy at home, with little to no equipment. I am designing the back-end part of NYA, creating a REST API in NodeJS with Express and using MongoDB as a data base.
-LE: Now using Amazon Web Services, S3 to be more precise.
+Nya is a fitness app designed to help people stay healthy at home, with little to no equipment. I am designing the back-end part of NYA, creating a REST API in NodeJS with Express and using MongoDB as a data base.<br>
+LE: Now using Amazon Web Services, S3 to be more precise.<br>
 
 Documentation on how it works will come out as soon as it is hosted.
 
