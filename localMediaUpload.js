@@ -1,3 +1,5 @@
+// ---------- OBSOLETE -------
+
 //Run to populate db
 //hey, SebDev here. will make this smarter. just wait :D
 //Nailed it - SebDev

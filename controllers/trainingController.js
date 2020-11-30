@@ -44,9 +44,10 @@ exports.getAllTrainings = async (req, res) => {
 
     //execute query
     const dbtrainings = await query;
+    //add imageLink
     const trainings = await Promise.all(
       dbtrainings.map(async (el) => {
-        el.img = await mediaUrl(`img/${el.img}`);
+        el.imgLink = await mediaUrl(`img/${el.imgName}`);
         return el;
       })
     );
@@ -68,8 +69,18 @@ exports.getAllTrainings = async (req, res) => {
 
 exports.getTraining = async (req, res) => {
   try {
-    const training = await Training.findById(req.params.id);
-    if (!training) throw Error('No training at this id');
+    const dbTraining = await Training.findById(req.params.id);
+    if (!dbTraining) throw Error('No training at this id');
+    // generate vidLink fo each video and update res object
+    const exercisesArray = await Promise.all(
+      dbTraining.exercises.map(async (el) => {
+        el.vidLink = await mediaUrl(`vid/${el.vidName}`);
+        return el;
+      })
+    );
+    const training = dbTraining;
+    training.exercises = exercisesArray;
+
     res.status(200).json({
       status: 'succes',
       data: {

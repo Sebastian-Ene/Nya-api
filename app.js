@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use('/nya/api/v1/trainings', trainingRouter);
 
+// ------ OBSOLETE -------
 app.use('/nya/api/v1/media', mediaRouter);
 
 module.exports = app;

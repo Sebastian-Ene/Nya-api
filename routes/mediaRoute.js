@@ -1,3 +1,5 @@
+// ------ OBSOLETE --------
+
 const express = require('express');
 const mediaRouter = require('../controllers/mediaController');
 
